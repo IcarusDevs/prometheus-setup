@@ -1,0 +1,31 @@
+# Global configuration
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Rule files (for alerting rules)
+rule_files:
+  # - "alert_rules.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 5s
+
+  # .NET applications
+  - job_name: 'dotnet-transitar'
+    static_configs:
+      - targets: 
+        - 'host.docker.internal:5000'  # For local .NET app
+        - 'host.docker.internal:5001'  # Add more as needed
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  # Node Exporter (for system metrics)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 10s
