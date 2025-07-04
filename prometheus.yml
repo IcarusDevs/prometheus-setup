@@ -1,35 +1,30 @@
-# Global configuration
+---
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
-
-# Rule files (for alerting rules)
-rule_files:
-  # - "alert_rules.yml"
-
-# Scrape configurations
+rule_files: null
 scrape_configs:
-  # Prometheus itself
-  - job_name: 'prometheus'
+  - job_name: prometheus
     static_configs:
-      - targets: ['localhost:9090']
+      - targets:
+          - localhost:9090
     scrape_interval: 5s
-
-  # .NET applications
-  - job_name: 'dotnet-transitar'
+  - job_name: dotnet-transitar
     static_configs:
-     - targets: ['localhost:8080', 'localhost:8081']
+      - targets:
+          - localhost:8080
+          - localhost:8081
         labels:
-          group: 'test'
-
-      - targets: ['api.test', 'api.test:5000']
+          group: test
+      - targets:
+          - api.test
+          - api.test:5000
         labels:
-          group: 'team'
+          group: team
     metrics_path: /metrics
     scrape_interval: 5s
-
-  # Node Exporter (for system metrics)
-  - job_name: 'node-exporter'
+  - job_name: node-exporter
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets:
+          - node-exporter:9100
     scrape_interval: 10s
